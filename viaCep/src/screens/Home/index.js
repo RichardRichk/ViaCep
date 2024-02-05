@@ -2,7 +2,8 @@ import { View } from "react-native"
 import {BoxInput} from "../../components/BoxInput/index"
 import { ContainerForm, DoubleView, ScrollForm } from "./style"
 import { useEffect, useState } from "react"
-import { axios } from "react-native-axios/lib/axios"
+import { axios } from "axios"
+import { api } from "../../services"
 
 export function Home() {
     //hooks - states
@@ -80,26 +81,33 @@ export function Home() {
 
     //hooks - effect
         useEffect (async () => {
-            try {
-                if (cep != "" && cep.length >=8) {
-                    const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
-                };
-
-                if(response.error){
-                    alert("Verifique o CEP");
-                    return;
-                }
-
-                setLogradouro(response.data.logradouro);
-                setBairro(response.data.bairro);
-                setCidade(response.data.localidade);
-                setUf(response.data.uf);
-                setEstado({verificaUf});
-
-            } catch (error) {
-                console.log(`Erro ao buscar o cep: ${error}`)
-            }
+          
         }, []);
+
+        async function loadAdress(cep) {
+          try {
+            if (cep != "" && cep.length >= 8) {
+
+                const response = await (api.get(`${cep}/json/`))
+
+                const data = (await response).data
+
+                setLogradouro(data.logradouro);
+                setBairro(data.bairro);
+                setCidade(data.localidade);
+                setUf(data.uf);
+                setEstado(verificaUf(uf))
+            }
+
+            else if(response.error){
+                alert("Verifique o CEP");
+                return;
+            }
+
+        } catch (error) {
+            console.log(`Erro ao buscar o cep: ${error}`)
+        }
+        }
 
     return(
 
@@ -115,15 +123,14 @@ export function Home() {
                 <BoxInput
                     textLabel= "informe o CEP:"
                     placeholder="XXXXX-XXX"
-                    keyTipe='numeric'
-                    maxLenght={9}
-                    minLenght={8}
+                    maxLength={8}
                     editable={true}
-                    fieldValue={cep}
+                    value={cep}
                     onChangeText={(tx) => {
                         setCep(tx)
                     }}
-                    keyBoardType = "decimal-pad"
+                    onBlur = {loadAdress(cep)}
+                    keyboardType = {'numeric'}
                 />
 
                 <BoxInput

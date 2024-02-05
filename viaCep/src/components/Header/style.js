@@ -23,8 +23,11 @@ export const HeaderContent = styled.SafeAreaView`
 
 export const TextHeader = styled.Text`
     font-family: 'Roboto_500Medium';
-    color: #333e33;
-    font-size: 24px;
+    color: #fecc2b;
+    font-size: 45px;
     text-align: center;
+    padding: 0px 8px;
+    background-color: #0D214F;
+    transform: rotate(1.5deg);
 `
 

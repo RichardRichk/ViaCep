@@ -1,5 +1,5 @@
 
-import { HeaderContainer, HeaderContent, TextHeader } from "./style";
+import { HeaderContainer, HeaderContent, TextHeader,} from "./style";
 
 export function Header(){
     return(
@@ -10,7 +10,7 @@ export function Header(){
 
         <HeaderContainer>
             <HeaderContent>
-                <TextHeader>Consumo da API ViaCep</TextHeader>
+                    <TextHeader>VIA CEP</TextHeader>
             </HeaderContent>
         </HeaderContainer>
     )

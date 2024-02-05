@@ -5,17 +5,20 @@ export function Input ({
     editable,
     fieldValue,
     onChangeText,
-    KeyType,
+    keyboardType,
     maxLength,
+    onBlur,
 }){
     return(
         <InputText
             placeholder={placeholder}
             editable={editable}
-            keyboardType={KeyType}
+            keyboardType={keyboardType}
             maxLength={maxLength}
             value={fieldValue}
+            fieldValue={fieldValue}
             onChangeText={onChangeText}
+            onBlur={onBlur}
         />
     )
 }
